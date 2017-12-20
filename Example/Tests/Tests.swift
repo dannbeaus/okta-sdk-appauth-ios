@@ -1,6 +1,8 @@
 import UIKit
 import XCTest
 @testable import OktaAuth
+@testable import AppAuth
+@testable import Vinculum
 
 class Tests: XCTestCase {
 
@@ -77,30 +79,6 @@ class Tests: XCTestCase {
        })
     }
 
-    func testKeychainStorage() {
-        // Validate that tokens can be stored and retrieved via the keychain
-        let tokens = OktaTokenManager(authState: nil)
-
-        tokens.set(value: "fakeToken", forKey: "accessToken")
-        XCTAssertEqual(tokens.get(forKey: "accessToken"), "fakeToken")
-
-        // Clear tokens
-        tokens.clear()
-        XCTAssertNil(tokens.get(forKey: "accessToken"))
-    }
-
-    func testBackgroundKeychainStorage() {
-        // Validate that tokens can be stored and retrieved via the keychain
-        let tokens = OktaTokenManager(authState: nil)
-
-        tokens.set(value: "fakeToken", forKey: "accessToken", needsBackgroundAccess: true)
-        XCTAssertEqual(tokens.get(forKey: "accessToken"), "fakeToken")
-
-        // Clear tokens
-        tokens.clear()
-        XCTAssertNil(tokens.get(forKey: "accessToken"))
-    }
-
     func testIntrospectionEndpointURL() {
         // Similar use case for revoke and userinfo endpoints
         OktaAuth.configuration = [
@@ -117,5 +95,41 @@ class Tests: XCTestCase {
         ]
         let url = Introspect().getIntrospectionEndpoint()
         XCTAssertEqual(url?.absoluteString, "https://example.com/oauth2/default/v1/introspect")
+    }
+
+    func testUserInfoWithoutToken() {
+        // Verify an error is returned if the accessToken is not included
+        OktaAuth.configuration = [
+            "issuer": "https://example.com/oauth2/default"
+        ]
+        
+        let _ = UserInfo(token: nil) { response, error in
+            XCTAssertEqual(error?.localizedDescription, "Missing Bearer token. You must authenticate first.")
+        }
+    }
+
+    func testRevokeWithoutToken() {
+        // Verify an error is returned if the accessToken is not included
+        OktaAuth.configuration = [
+            "issuer": "https://example.com/oauth2/default"
+        ]
+
+        let _ = Revoke(token: nil) { response, error in
+            XCTAssertEqual(error?.localizedDescription, "Missing Bearer token. You must authenticate first.")
+        }
+    }
+
+    func testIsAuthenticated() {
+        // Validate that if there is an existing accessToken, we return an "authenticated" state
+        let mockAuthState = OIDAuthState.init(authorizationResponse: nil, tokenResponse: nil, registrationResponse: nil)
+        let tokenManager = OktaTokenManager(
+            authState: mockAuthState,
+            issuer: "https://example.com",
+            clientId: "abc123"
+        )
+        OktaAuthorization().storeAuthState(tokenManager)
+        // Should return 'false'
+        let isAuth = OktaAuth.isAuthenticated()
+        XCTAssertFalse(isAuth)
     }
 }

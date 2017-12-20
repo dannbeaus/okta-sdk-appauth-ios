@@ -13,6 +13,7 @@
 public enum OktaError: Error {
     case APIError(String)
     case MissingConfigurationValues
+    case NoBearerToken
     case NoClientSecret(String)
     case NoDiscoveryEndpoint
     case NoIntrospectionEndpoint
@@ -31,6 +32,8 @@ extension OktaError: LocalizedError {
         case .MissingConfigurationValues:
             return NSLocalizedString("Could not parse 'issuer', 'clientId', and/or 'redirectUri' plist values. " +
                 "See https://github.com/okta/okta-sdk-appauth-ios/#configuration for more information.", comment: "")
+        case .NoBearerToken:
+            return NSLocalizedString("Missing Bearer token. You must authenticate first.", comment: "")
         case .NoClientSecret(plist: let plist):
             return NSLocalizedString(
                 "ClientSecret not included in PList configuration file: " +

@@ -13,10 +13,17 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var tokenView: UITextView!
 
-    override func viewDidLoad() { super.viewDidLoad() }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        if OktaAuth.isAuthenticated() {
+            // If there is a valid accessToken
+            // build the token view.
+            self.buildTokenTextView()
+        }
+    }
 
     @IBAction func loginButton(_ sender: Any) {
-        if tokens == nil { self.loginCodeFlow() }
+        self.loginCodeFlow()
     }
 
     @IBAction func refreshTokens(_ sender: Any) {
@@ -68,10 +75,8 @@ class ViewController: UIViewController {
             .login()
             .start(self) { response, error in
                 if error != nil { print(error!) }
-                if let authResponse = response {
-                    // Store tokens in keychain
-                    tokens?.set(value: authResponse.accessToken!, forKey: "accessToken")
-                    tokens?.set(value: authResponse.idToken!, forKey: "idToken")
+                if let _ = response {
+                    // Tokens are stored securely in keychain
                     self.buildTokenTextView()
                 }
         }
@@ -82,23 +87,22 @@ class ViewController: UIViewController {
     }
 
     func buildTokenTextView() {
-        if tokens == nil {
+        guard let currentTokens = tokens else {
             tokenView.text = ""
             return
         }
 
         var tokenString = ""
-
-        if let accessToken = tokens?.accessToken {
+        if let accessToken = currentTokens.accessToken {
             tokenString += ("\nAccess Token: \(accessToken)\n")
         }
 
-        if let idToken = tokens?.idToken {
-            tokenString += "\nidToken Token: \(idToken)\n"
+        if let idToken = currentTokens.idToken {
+            tokenString += "\nID Token: \(idToken)\n"
         }
 
-        if let refreshToken = tokens?.refreshToken {
-            tokenString += "\nrefresh Token: \(refreshToken)\n"
+        if let refreshToken = currentTokens.refreshToken {
+            tokenString += "\nRefresh Token: \(refreshToken)\n"
         }
 
         self.updateUI(updateText: tokenString)
