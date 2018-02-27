@@ -38,7 +38,7 @@ public struct Revoke {
 
     func getRevokeEndpoint() -> URL? {
         // Get the revocation endpoint from the discovery URL, or build it
-        if let discoveryEndpoint = OktaAuth.tokens?.authState?.lastAuthorizationResponse.request.configuration.discoveryDocument?.discoveryDictionary["revocation_endpoint"] {
+        if let discoveryEndpoint = OktaAuth.tokens?.authState.lastAuthorizationResponse.request.configuration.discoveryDocument?.discoveryDictionary["revocation_endpoint"] {
             return URL(string: discoveryEndpoint as! String)
         }
 

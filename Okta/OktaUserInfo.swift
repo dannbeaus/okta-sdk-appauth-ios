@@ -40,7 +40,7 @@ public struct UserInfo {
     func getUserInfoEndpoint() -> URL? {
         // Get the introspection endpoint from the discovery URL, or build it
 
-        if let discoveryEndpoint = OktaAuth.tokens?.authState?.lastAuthorizationResponse.request.configuration.discoveryDocument?.userinfoEndpoint {
+        if let discoveryEndpoint = OktaAuth.tokens?.authState.lastAuthorizationResponse.request.configuration.discoveryDocument?.userinfoEndpoint {
             return discoveryEndpoint
         }
 

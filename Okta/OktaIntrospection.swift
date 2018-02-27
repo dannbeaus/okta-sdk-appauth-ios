@@ -44,7 +44,7 @@ public struct Introspect {
 
     func getIntrospectionEndpoint() -> URL? {
         // Get the introspection endpoint from the discovery URL, or build it
-        if let discoveryEndpoint = OktaAuth.tokens?.authState?.lastAuthorizationResponse.request.configuration.discoveryDocument?.discoveryDictionary["introspection_endpoint"] {
+        if let discoveryEndpoint = OktaAuth.tokens?.authState.lastAuthorizationResponse.request.configuration.discoveryDocument?.discoveryDictionary["introspection_endpoint"] {
             return URL(string: discoveryEndpoint as! String)
         }
 

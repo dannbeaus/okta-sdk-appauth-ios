@@ -9,7 +9,7 @@
 	<key>clientSecret</key>
 	<string></string>
 	<key>clientId</key>
-	<string>{clientId}</string>
+	<string>Jw1nyzbsNihSuOETY3R1</string>
 	<key>issuer</key>
 	<string>https://{yourOktaDomain}.com/oauth2/default</string>
 </dict>
