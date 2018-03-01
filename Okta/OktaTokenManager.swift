@@ -28,7 +28,7 @@ open class OktaTokenManager: NSObject {
         self.idToken = authState?.lastTokenResponse?.idToken
         self.refreshToken = authState?.lastTokenResponse?.refreshToken
 
-        OktaAuth.tokens = self
+        tokens = self
     }
 
     public func set(value: String, forKey: String) {
@@ -46,6 +46,6 @@ open class OktaTokenManager: NSObject {
 
     public func clear() {
         OktaKeychain.removeAll()
-        OktaAuth.tokens = nil
+        tokens = nil
     }
 }

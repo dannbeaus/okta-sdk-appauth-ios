@@ -38,11 +38,11 @@ public struct UserInfo {
     func getUserInfoEndpoint() -> URL? {
         // Get the introspection endpoint from the discovery URL, or build it
 
-        if let discoveryEndpoint = OktaAuth.tokens?.authState?.lastAuthorizationResponse.request.configuration.discoveryDocument?.userinfoEndpoint {
+        if let discoveryEndpoint = tokens?.authState?.lastAuthorizationResponse.request.configuration.discoveryDocument?.userinfoEndpoint {
             return discoveryEndpoint
         }
 
-        let issuer = OktaAuth.configuration?["issuer"] as! String
+        let issuer = configuration?["issuer"] as! String
         if issuer.range(of: "oauth2") != nil {
             return URL(string: Utils.removeTrailingSlash(issuer) + "/v1/userinfo")
         }

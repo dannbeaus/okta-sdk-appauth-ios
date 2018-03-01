@@ -26,7 +26,7 @@ public struct Revoke {
                 "Content-Type": "application/x-www-form-urlencoded"
             ]
 
-            let data = "token=\(self.token!)&client_id=\(OktaAuth.configuration?["clientId"] as! String)"
+            let data = "token=\(self.token!)&client_id=\(configuration?["clientId"] as! String)"
 
             OktaApi.post(revokeEndpoint, headers: headers, postData: data) { response, error in callback(response, error) }
 
@@ -39,11 +39,11 @@ public struct Revoke {
     func getRevokeEndpoint() -> URL? {
         // Get the revocation endpoint from the discovery URL, or build it
 
-        if let discoveryEndpoint = OktaAuth.tokens?.authState?.lastAuthorizationResponse.request.configuration.discoveryDocument?.discoveryDictionary["revocation_endpoint"] {
+        if let discoveryEndpoint = tokens?.authState?.lastAuthorizationResponse.request.configuration.discoveryDocument?.discoveryDictionary["revocation_endpoint"] {
             return URL(string: discoveryEndpoint as! String)
         }
 
-        let issuer = OktaAuth.configuration?["issuer"] as! String
+        let issuer = configuration?["issuer"] as! String
         if issuer.range(of: "oauth2") != nil {
             return URL(string: Utils.removeTrailingSlash(issuer) + "/v1/revoke")
         }

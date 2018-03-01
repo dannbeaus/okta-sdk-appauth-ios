@@ -23,7 +23,7 @@ public struct Introspect {
                 "Content-Type": "application/x-www-form-urlencoded"
             ]
 
-            let data = "token=\(token)&client_id=\(OktaAuth.configuration?["clientId"] as! String)"
+            let data = "token=\(token)&client_id=\(configuration?["clientId"] as! String)"
 
             OktaApi.post(introspectionEndpoint, headers: headers, postData: data) { response, error in callback(response?["active"] as? Bool, error) }
 
@@ -34,11 +34,11 @@ public struct Introspect {
 
     func getIntrospectionEndpoint() -> URL? {
         // Get the introspection endpoint from the discovery URL, or build it
-        if let discoveryEndpoint = OktaAuth.tokens?.authState?.lastAuthorizationResponse.request.configuration.discoveryDocument?.discoveryDictionary["introspection_endpoint"] {
+        if let discoveryEndpoint = tokens?.authState?.lastAuthorizationResponse.request.configuration.discoveryDocument?.discoveryDictionary["introspection_endpoint"] {
             return URL(string: discoveryEndpoint as! String)
         }
 
-        let issuer = OktaAuth.configuration?["issuer"] as! String
+        let issuer = configuration?["issuer"] as! String
         if issuer.range(of: "oauth2") != nil {
             return URL(string: Utils.removeTrailingSlash(issuer) + "/v1/introspect")
         }
