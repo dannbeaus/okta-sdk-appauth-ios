@@ -21,7 +21,7 @@
 		974EC3F2204859DE00BE4FB9 /* OktaUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974EC3E7204859DE00BE4FB9 /* OktaUserInfo.swift */; };
 		974EC3F3204859DE00BE4FB9 /* OktaUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974EC3E8204859DE00BE4FB9 /* OktaUtils.swift */; };
 		974EC42320485C6900BE4FB9 /* OktaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974EC3D22048589B00BE4FB9 /* OktaTests.swift */; };
-		974EC42C20485E5F00BE4FB9 /* libAppAuth-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 974EC42D20485E5F00BE4FB9 /* libAppAuth-iOS.a */; };
+		974EC434204868A900BE4FB9 /* AppAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 974EC435204868A900BE4FB9 /* AppAuth.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +53,7 @@
 		974EC3E7204859DE00BE4FB9 /* OktaUserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OktaUserInfo.swift; sourceTree = "<group>"; };
 		974EC3E8204859DE00BE4FB9 /* OktaUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OktaUtils.swift; sourceTree = "<group>"; };
 		974EC42D20485E5F00BE4FB9 /* libAppAuth-iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libAppAuth-iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		974EC435204868A900BE4FB9 /* AppAuth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AppAuth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				974EC42C20485E5F00BE4FB9 /* libAppAuth-iOS.a in Frameworks */,
+				974EC434204868A900BE4FB9 /* AppAuth.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,6 +127,7 @@
 		974EC3F420485BE100BE4FB9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				974EC435204868A900BE4FB9 /* AppAuth.framework */,
 				974EC42D20485E5F00BE4FB9 /* libAppAuth-iOS.a */,
 			);
 			name = Frameworks;
